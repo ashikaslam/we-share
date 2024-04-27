@@ -6,7 +6,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
      confirm_password = serializers.CharField(required = True)
      class Meta:
         model =  User
-        fields = ['user','first_name','last_name','email',"mobile_number",'password', 'confirm_password','gender','blood_grpup']
+        fields = ['first_name','last_name','email',"mobile_number",'password', 'confirm_password','gender','blood_grpup']
     
 
      def save(self):

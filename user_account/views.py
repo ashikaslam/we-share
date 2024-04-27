@@ -108,7 +108,7 @@ class RegistrationVies(APIView):
             user.save()
            
 
-            active_account_url ="http://127.0.0.1:8000"+ reverse("active_account") + "?phone_number={}&email={}".format(phone_number,email)
+            active_account_url ="https://food-site-03s7.onrender.com"+ reverse("active_account") + "?phone_number={}&email={}".format(phone_number,email)
             # clean_url = ''.join(char for char in active_account_url if ord(char) > 31 and ord(char) < 127)
             # # URL encode
             # clean_url_encoded = urllib.parse.quote(clean_url, safe=':/?&=')  # Encode only necessary characters
