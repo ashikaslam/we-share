@@ -41,10 +41,12 @@ class create_post(APIView):
             image_file = request.FILES.get('image1')
             # Remove 'impage1' key from request.data to avoid conflict with serializer
             request.data.pop('image1', None)
-            # Pass image_file to serializer as context
-            serializer = self.serializer_class(data=request.data, context={'image_file': image_file})
+            # # Pass image_file to serializer as context
+            serializer = self.serializer_class(data=request.data )
+            #serializer = self.serializer_class(data=request.data '''context={'image_file': image_file}''')
             if serializer.is_valid():
-                try:
+                    print("yes valied>>>>")
+               # try:
                     the_post = serializer.save()
                     # Update the_post with user before saving
                     the_post.user = request.user
@@ -54,8 +56,8 @@ class create_post(APIView):
                         the_post.delete()
                         return Response({'status': 0})
                     return Response({'status': 1})
-                except Exception as e:
-                    return Response({'status': 0})
+                # except Exception as e:
+                #     return Response({'status': 0})
             else:
                 return Response(serializer.errors)
         else:

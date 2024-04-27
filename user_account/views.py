@@ -196,6 +196,7 @@ class Login_api_view(APIView):
             Refresh=RefreshToken.for_user(user)
             login(request,user)
             print(Refresh.access_token)
+            print("inside the login view")
             return Response({'access_token' :str( Refresh.access_token), 'refress':str( Refresh),'user_id' : user.id,"status":1})
         
              

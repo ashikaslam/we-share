@@ -28,7 +28,7 @@ class Post(models.Model):
     user=models.ForeignKey(User,  on_delete=models.CASCADE,related_name="my_post",blank=True,default=None,null=True)
     title=models.CharField( max_length=250)
     description=models.TextField()
-    image1=models.ImageField(upload_to='photos/post',blank=True)
+    image1=models.ImageField(upload_to='photos/post',blank=True,null=True,default=None)
     phone_number = models.CharField(max_length=13,blank=True,null=True,default=None)
     blood_grpup=models.CharField(choices =BLOOD_CHOICES,max_length=3)
     amount = models.IntegerField(default=1)
