@@ -21,6 +21,8 @@ urlpatterns = [
 
   path('post/',views.create_post.as_view(),name='post'),
   path('home/',views.RecentPost.as_view(),name='home'),
+  path('coment/',views.create_coment.as_view(),name='coment'),
+  path('get_coment_for_a_post/',views.get_coment_for_a_post.as_view(),name='get_coment_for_a_post'),
    
     
 ]

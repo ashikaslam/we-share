@@ -116,5 +116,6 @@ class Adrress(models.Model):
     unionOrtown = models.CharField(max_length=50, blank=False)
     villageOrrad = models.CharField(max_length=50, blank=False)
     zip_code = models.CharField(max_length=5)
+    
 
 

@@ -24,6 +24,10 @@ RATING_CHOICES = [
 ]
 
 
+
+
+
+
 class Post(models.Model):
     user=models.ForeignKey(User,  on_delete=models.CASCADE,related_name="my_post",blank=True,default=None,null=True)
     title=models.CharField( max_length=250)
@@ -59,6 +63,14 @@ class Post(models.Model):
 
 
 
+
+class Coments(models.Model):
+     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='coments',blank=True,null=True)
+     user = models.ForeignKey(User,on_delete=models.CASCADE,blank=True,null=True)
+     discription = models.TextField()
+     created_at = models.DateTimeField(auto_now_add = True)
+
+    
 
 
 

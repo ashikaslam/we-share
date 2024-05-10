@@ -30,9 +30,13 @@ from. import models
 from django.http import JsonResponse
 from rest_framework.parsers import MultiPartParser, FormParser
 
+from rest_framework.authentication import SessionAuthentication
+from rest_framework.permissions import IsAuthenticated
+
 class create_post(APIView):
     serializer_class = serializers.PostSerializer
-    authentication_classes=[JWTAuthentication]
+    authentication_classes=[JWTAuthentication,SessionAuthentication]
+    permission_classes = [IsAuthenticated]
     parser_classes = (MultiPartParser, FormParser)
 
     def post(self, request):
@@ -96,4 +100,72 @@ class RecentPost(APIView):
                
 
 
+class create_coment(APIView):
+    serializer_class = serializers.ComentsSerializer
+    authentication_classes=[JWTAuthentication,SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+    def post(self, request):
+        print('inside the coment1')
+        if request.user.is_authenticated :
+             print('inside the coment2')
+             serializer = self.serializer_class(data=request.data )
+             if serializer.is_valid():
+                  id_value = request.GET.get('id')
+                  print(id_value)
+                  if id_value:
+                    id_value=int(id_value)
+                    our_post = models.Post.objects.filter(id=id_value).exists()
+                    if our_post:
+                     print('yes we have post')
+                     our_post = models.Post.objects.get(id=id_value)
+                     coment = serializer.save()
+                     coment.user=request.user
+                     coment.post=our_post
+                     print("the user is ", request.user)
+                     print(our_post)
 
+                     coment.save()
+                     return Response("done")
+
+
+                  
+             else :
+                 print("not valied")
+                 return Response(serializer.errors)
+        return Response("error")
+            
+             
+
+def fun(coment):
+    dic ={
+    "user_id":coment.user.id,
+    "post_id":coment.post.id,
+    "user_name":f"""{coment.user.first_name}  {coment.user.last_name}""",
+    "coment_text":coment.discription,
+    "time":coment.created_at,
+
+    }
+    return dic
+
+
+
+
+
+class get_coment_for_a_post(APIView):
+    def get(self, request):
+                  id_value = request.GET.get('id')
+                  print(id_value)
+                  if id_value:
+                    id_value=int(id_value)
+                    our_post = models.Post.objects.filter(id=id_value).exists()
+                    if our_post:
+                     print('yes we have post')
+                     our_post = models.Post.objects.get(id=id_value) 
+                     all_the_coment = our_post.coments.all()
+                     arr = []
+                     for i in  all_the_coment:
+                         now = fun(i)
+                         arr.append(now)
+
+                     return JsonResponse({'all_the_coment': list(arr)})
+                     

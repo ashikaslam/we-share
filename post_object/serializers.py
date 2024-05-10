@@ -1,7 +1,7 @@
 
 from.models import User
 from rest_framework import serializers
-from .models import Post
+from .models import Post,Coments
 
 
 
@@ -73,3 +73,27 @@ class PostSerializer(serializers.ModelSerializer):
     #     post = Post.objects.create(**post_data)
     #     return post
     # i cna go with this code or without  'blood_need_time',
+
+
+
+
+
+
+
+class ComentsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Coments
+        fields = ['discription','post']
+
+        def save(self):
+           post = self.validated_data['post']
+           discription = self.validated_data['discription']
+
+           new_coments = Coments(
+              discription =discription,
+             ## post= post
+
+           )
+
+           return  new_coments
+
